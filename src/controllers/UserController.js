@@ -25,7 +25,6 @@ class UserController {
     }
 
     async login(req, res, next) {
-        console.log(req.body)
         passport.authenticate('local', 
             { session: false }, 
             (err, user, info) => { 
@@ -38,28 +37,28 @@ class UserController {
                     return res.status(401).json({ success:false, message })
                 }
                 
-                const { _id } = user
-                const token = jwt.sign({ _id }, SECRET_KEY, { expiresIn: '1h' })
+                const { _id, _doc: { password, ...rest } } = user
+                const token = jwt.sign({ _id }, SECRET_KEY)
 
-                res.json({ success: true, token })
+                res.json({ success: true, user: {_id, ...rest}, token })
 
         })(req, res, next)
     }
 
     async checkToken(req, res) {
         const token = req.headers.authorization.replace('Bearer ', '')
-        const response = jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
             if(err) {
                 res.json({err})
             }
             res.json({decoded})
         })
-        res.json({response})
     }
 
 
     async show(req, res, next) {
-        res.json({ headers: req.headers })
+        const token = req.headers.authorization.replace('Bearer ', '')
+        res.json({ token })
     }
 
 }

@@ -2,14 +2,23 @@ const mongoose = require('mongoose');
 
 const Movie = new mongoose.Schema(
     {
-        _id: {
-            type: String,
-            required: true,
+        movieId: {
+            type: Number,
+            required: true
         },
         like: {
             type: Boolean,
-            required: true
+            required: true,
+            default: true
         },
+        users: [
+            {
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User" 
+            }
+        ]
+    }, {
+        toObject: { virtuals : true },
     }
 );
 

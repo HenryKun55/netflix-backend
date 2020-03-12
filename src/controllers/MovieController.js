@@ -1,10 +1,39 @@
 const Movie = require('../models/Movie');
+const User = require('../models/User');
+const { decodeJwt } = require('../util/decode')
+const mongoose = require('mongoose')
 
 class MovieController {
     
     async store(req, res) {
-        const { password, name, email } = req.body
+        const token = req.headers.authorization.replace('Bearer ', '')
+        const decoded = decodeJwt(token);
+        const user = await User.findById(decoded)
 
+        const movie = await Movie.findOne({movieId: req.body.movieId})
+
+        if(!movie) {
+            const movieCreate = await Movie.create(req.body)
+            movieCreate.users.push(user._id)
+            await movieCreate.save()
+            return res.json(movieCreate)
+        } else {
+            const check = await Movie.findOne({"users": mongoose.Types.ObjectId(user._id)})
+            if(check) {
+                movie.users.pull(user)
+            }else {
+                movie.users.push(user._id)
+            }   
+            await movie.save()
+        }   
+
+        return res.json(movie)
+
+    }
+
+    async show(req, res) { 
+        const movie = await Movie.findOne({movieId: req.params.id})
+        return res.json(movie)
     }
 
 }
