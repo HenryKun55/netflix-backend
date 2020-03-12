@@ -5,6 +5,7 @@ const routes = require('../routes')
 const bodyParser = require('body-parser')
 
 module.exports = app => { 
+    app.use(cors())
     app.use(express.urlencoded({ 
         extended: false 
     }))
@@ -12,6 +13,5 @@ module.exports = app => {
     app.use(morgan('dev'))
     app.use(express.json())
     app.use(express.urlencoded({extended: true}))
-    app.use(cors())
     app.use(routes)
 }

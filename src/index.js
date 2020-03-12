@@ -15,4 +15,4 @@ mongoose.connect(`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0-t3x
     useCreateIndex: true
 })
 
-app.listen(PORT, () => console.log(`Server on localhost:${PORT}`));
+app.listen(proccess.end.PORT || PORT);
