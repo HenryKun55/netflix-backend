@@ -3,6 +3,8 @@ const app = require('express')()
 const consign = require('consign')
 const mongoose = require('mongoose')
 
+const port = 3333
+
 consign({ verbose: true, locale: 'pt-br', cwd: 'src' })
   .include('middlewares')
   .into(app)
@@ -15,4 +17,4 @@ mongoose.connect(`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0-t3x
     useCreateIndex: true
 })
 
-app.listen(proccess.end.PORT || PORT);
+app.listen(proccess.end.PORT || port);
