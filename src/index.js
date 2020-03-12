@@ -17,4 +17,4 @@ mongoose.connect(`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0-t3x
     useCreateIndex: true
 })
 
-app.listen(proccess.end.PORT || port);
+app.listen(process.env.PORT || port);
