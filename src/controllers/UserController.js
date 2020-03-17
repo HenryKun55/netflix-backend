@@ -16,7 +16,7 @@ class UserController {
             .then(async (hash) => {
                 await User.create({ name, email, password: hash }, (err, newUser) => { 
                     if (err) { 
-                        return res.status(400).json({ success: false, message: err.message })
+                        return res.status(200).json({ success: false, message: err.message })
                     }
 
                     const { doc: { password, ...rest } } = newUser
