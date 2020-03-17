@@ -19,7 +19,7 @@ class UserController {
                         return res.status(400).json({ success: false, message: err.message })
                     }
 
-                    const { doc: { password, ...rest } } = user
+                    const { doc: { password, ...rest } } = newUser
         
                     return res.json({ success: true, user: {...rest} })
                 })
