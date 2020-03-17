@@ -18,8 +18,10 @@ class UserController {
                     if (err) { 
                         return res.status(400).json({ success: false, message: err.message })
                     }
+
+                    const { password, ...rest } = newUser
         
-                    return res.json({ success: true, user: newUser })
+                    return res.json({ success: true, user: {...rest} })
                 })
             })
     }
