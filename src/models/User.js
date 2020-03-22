@@ -35,10 +35,10 @@ User.method('compare', async (formPass, userPass) => {
     return bcrypt.compare(formPass, userPass)
 })
 
-User.virtual('url').get(function() {
+User.virtual('urlImage').get(function() {
     const url = process.env.URL
 
-    return `${url}files/${encodeURIComponent(this.path)}`
+    return `${url}files/${encodeURIComponent(this.photo)}`
 })
 
 User.plugin(uniqueValidator);
