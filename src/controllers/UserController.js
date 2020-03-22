@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 const jwt = require("jsonwebtoken")
+const { decodeJwt } = require('../util/decode')
 
 const { SECRET_KEY } = process.env
 
@@ -49,18 +50,30 @@ class UserController {
 
     async checkToken(req, res) {
         const token = req.headers.authorization.replace('Bearer ', '')
-        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+        jwt.verify(token, SECRET_KEY, async (err, decoded) => {
             if(err) {
                 res.json({err})
             }
-            res.json({decoded})
+            const user = await User.findById(decoded._id)
+            res.json({user})
         })
     }
 
-
-    async show(req, res, next) {
+    async update(req, res) {
         const token = req.headers.authorization.replace('Bearer ', '')
-        res.json({ token })
+        const _id = decodeJwt(token)
+
+        if(_id) {
+
+            const user = await User.findById(_id)
+            
+            user.photo = req.file.key
+            await user.save()
+            
+            return res.json({success: true, user})
+        }
+
+        return res.json({success: false})
     }
 
 }
