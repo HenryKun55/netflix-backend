@@ -10,7 +10,7 @@ module.exports = app => {
     app.use(express.urlencoded({ 
         extended: true 
     }))
-    app.use('/files', express.static(path.resolve(__dirname, '../', 'tmp')))
+    app.use('/files', express.static(path.resolve(__dirname, '../', '../', 'tmp')))
     app.use(bodyParser.json())
     app.use(morgan('dev'))
     app.use(express.json())
