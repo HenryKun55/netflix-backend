@@ -1,11 +1,8 @@
 const multer = require('multer')
 const path = require('path')
 const crypto = require('crypto')
-const mkdirp = require('mkdirp')
 
 const dir = path.resolve(__dirname, '../', '../', 'tmp')
-
-mkdirp.sync(dir)
 
 module.exports = {
     dest: dir,
