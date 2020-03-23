@@ -40,10 +40,11 @@ class UserController {
                     return res.status(401).json({ success:false, message })
                 }
                 
-                const { _id, _doc: { password, ...rest } } = user
+                const { _id, _doc: { password, photo, ...rest } } = user
+                console.log(user);
                 const token = jwt.sign({ _id }, SECRET_KEY)
 
-                res.json({ success: true, user: {_id, ...rest}, token })
+                res.json({ success: true, user: {_id, url: user.urlImage, ...rest}, token })
 
         })(req, res, next)
     }
