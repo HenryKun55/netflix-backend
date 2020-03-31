@@ -32,7 +32,14 @@ class MovieController {
     }
 
     async show(req, res) { 
-        const movie = await Movie.findOne({movieId: req.params.id}).populate()
+        const movie = await Movie.findOne({movieId: req.params.id}).populate({
+            path: 'ratings',
+            select: ['_id', 'message', 'rating', 'user' ],
+            populate: {
+                path: 'user',
+                select: ['_id', 'name', 'urlImage', ]
+            }
+        })
         return res.json(movie)
     }
 

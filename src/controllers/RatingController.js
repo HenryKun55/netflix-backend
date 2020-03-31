@@ -13,13 +13,24 @@ class RatingController {
 
         const {movieId, message, rating} = req.body
 
+        const movie = await Movie.findOne({movieId})
+
         const newRating = await Rating.create({
             user,
             movieId,
             message,
             rating
         })
-        
+
+        if(!movie) {
+            const movieCreate = await Movie.create(req.body)
+            movieCreate.ratings.push(newRating._id)
+            await movieCreate.save()
+        } else {
+            movie.ratings.push(newRating._id)
+            await movie.save()
+        }   
+
         const {_id, name, ...rest} = newRating.user
 
         user.ratings.push(newRating._id)
@@ -27,28 +38,10 @@ class RatingController {
 
         return res.json({rating: { userId: _id, name, message, rating }});
 
-        if(!movie) {
-            const movieCreate = await Movie.create(req.body)
-            movieCreate.users.push(user._id)
-            await movieCreate.save()
-            return res.json(movieCreate)
-        } else {
-            const check = await Movie.findOne({"_id": movie._id, "users": mongoose.Types.ObjectId(user._id)})
-            if(check) {
-                movie.users.pull(user)
-            } else {
-                movie.users.push(user._id)
-            }   
-            await movie.save()
-        }   
-        
-        return res.json(movie)
-
     }
 
     async index(req, res) {
         const ratings = await Rating.find()
-        console.log(ratings);
         return res.json(ratings)
     }
 
