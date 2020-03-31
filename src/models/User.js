@@ -22,7 +22,7 @@ const User = new mongoose.Schema(
         photo: {
             type: String,
             default: null
-        }
+        },
     },
     {
         toObject: { virtuals : true },
