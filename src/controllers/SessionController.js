@@ -21,7 +21,7 @@ module.exports = {
                 const { _id, _doc: { password, photo, ...rest } } = user
                 const token = jwt.sign({ _id }, SECRET_KEY)
 
-                res.json({ success: true, user: {_id, url: user.urlImage, ...rest}, token })
+                res.json({ success: true, user: {_id, url: photo ? user.urlImage : null , ...rest}, token })
 
         })(req, res, next)
     },
@@ -30,10 +30,10 @@ module.exports = {
         const token = req.headers.authorization.replace('Bearer ', '')
         jwt.verify(token, SECRET_KEY, async (err, decoded) => {
             if(err) {
-                res.json({err})
+                return res.status(401).json({success: false, message: err.message})
             }
             const user = await User.findById(decoded._id)
-            res.json({user})
+            return res.json({user})
         })
     }
 }

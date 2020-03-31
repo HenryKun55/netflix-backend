@@ -6,11 +6,6 @@ const Movie = new mongoose.Schema(
             type: Number,
             required: true
         },
-        like: {
-            type: Boolean,
-            required: true,
-            default: true
-        },
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId, 
@@ -20,7 +15,7 @@ const Movie = new mongoose.Schema(
         ratings: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Rating"
+                red: "Rating"
             }
         ]
     }, {
