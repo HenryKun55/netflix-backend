@@ -37,7 +37,8 @@ class MovieController {
             select: ['_id', 'message', 'rating', 'user' ],
             populate: {
                 path: 'user',
-                select: ['_id', 'name', 'urlImage', ]
+                model: 'User',
+                select: ['_id', 'name', 'urlImage', 'photo' ]
             }
         })
         return res.json(movie)
