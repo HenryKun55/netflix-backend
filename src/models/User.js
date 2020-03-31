@@ -23,6 +23,12 @@ const User = new mongoose.Schema(
             type: String,
             default: null
         },
+        ratings: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                red: "Rating"
+            }
+        ]
     },
     {
         toObject: { virtuals : true },

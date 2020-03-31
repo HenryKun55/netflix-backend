@@ -32,7 +32,7 @@ class MovieController {
     }
 
     async show(req, res) { 
-        const movie = await Movie.findOne({movieId: req.params.id})
+        const movie = await Movie.findOne({movieId: req.params.id}).populate()
         return res.json(movie)
     }
 

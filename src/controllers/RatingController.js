@@ -19,8 +19,11 @@ class RatingController {
             message,
             rating
         })
-
+        
         const {_id, name, ...rest} = newRating.user
+
+        user.ratings.push(newRating._id)
+        await user.save()
 
         return res.json({rating: { userId: _id, name, message, rating }});
 
