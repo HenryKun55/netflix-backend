@@ -25,7 +25,6 @@ const Movie = new mongoose.Schema(
         ]
     }, {
         toObject: { virtuals : true },
-        toJSON: { virtuals : true },
         timestamps: true
     }
 );
