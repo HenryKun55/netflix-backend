@@ -10,18 +10,19 @@ class UserController {
     async store(req, res) {
         const { password, name, email } = req.body
 
-        bcrypt.hash(password, saltRounds)
-            .then(async (hash) => {
-                await User.create({ name, email, password: hash }, (err, newUser) => { 
-                    if (err) { 
-                        return res.status(200).json({ success: false, message: err.message })
-                    }
+        const hash = await bcrypt.hash(password, saltRounds)
+        try {
+            const newUser = await User.create({ name, email, password: hash })
 
-                    const { _doc: { password, ...rest } } = newUser
-        
-                    return res.json({ success: true, user: {...rest} })
-                })
+            const { _doc: { password, ...rest } } = newUser
+    
+            return res.json({ success: true, user: {...rest} })
+        } catch (error) {
+            return res.status(200).json({ 
+                success: false,
+                message: err.message
             })
+        }
     }
 
     async update(req, res) {
