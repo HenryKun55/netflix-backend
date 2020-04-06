@@ -43,10 +43,6 @@ class MovieController {
                     select: ['_id', 'name', 'urlImage', 'photo' ]
                 }
             })
-            .populate({
-                path: 'users',
-                select: ['_id', 'name', 'photo'],
-            })
         return res.json(movie)
     }
 
