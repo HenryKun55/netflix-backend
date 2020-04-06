@@ -31,12 +31,22 @@ class RatingController {
             await movie.save()
         }   
 
-        const {_id, name, ...rest} = newRating.user
-
         user.ratings.push(newRating._id)
         await user.save()
 
-        return res.json({rating: { userId: _id, name, message, rating }});
+        const { photo, name, urlImage } = newRating.user;
+
+        return res.json({
+            _id: newRating._id, 
+            user: { 
+                _id: newRating.user._id, 
+                photo,
+                name,
+                urlImage,
+            },
+            message,
+            rating
+        });
 
     }
 
