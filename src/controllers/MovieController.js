@@ -36,7 +36,7 @@ class MovieController {
             .populate({
                 path: 'ratings',
                 model: 'Rating',
-                select: ['_id', 'message', 'rating', 'user' ],
+                select: ['_id', 'message', 'rating', 'user', 'users' ],
                 populate: {
                     path: 'user',
                     model: 'User',
