@@ -43,6 +43,7 @@ class RatingController {
                 name,
                 urlImage,
             },
+            users: newRating.users,
             message,
             rating
         });
