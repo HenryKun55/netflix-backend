@@ -2,7 +2,6 @@ const Rating = require('../models/Rating');
 const Movie = require('../models/Movie');
 const User = require('../models/User');
 const { decodeJwt } = require('../util/decode')
-const mongoose = require('mongoose')
 
 class RatingController {
     

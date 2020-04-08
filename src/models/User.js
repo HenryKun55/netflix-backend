@@ -28,6 +28,12 @@ const User = new mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 red: "Rating"
             }
+        ],
+        likeRatings: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                red: "Rating"
+            }
         ]
     },
     {

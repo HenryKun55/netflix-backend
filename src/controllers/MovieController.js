@@ -21,7 +21,7 @@ class MovieController {
             const check = await Movie.findOne({"_id": movie._id, "users": mongoose.Types.ObjectId(user._id)})
             if(check) {
                 movie.users.pull(user)
-            }else {
+            } else {
                 movie.users.push(user._id)
             }   
             await movie.save()
