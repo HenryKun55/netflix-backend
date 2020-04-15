@@ -15,6 +15,7 @@ const RatingController = require('./controllers/RatingController')
 const LikeRatingController = require('./controllers/LikeRatingController')
 
 routes.post('/user', UserController.store)
+routes.get('/user', UserController.show)
 routes.post('/user/photo',[jwtAuth, multer], UserController.update)
 
 routes.post('/login', SessionController.store)

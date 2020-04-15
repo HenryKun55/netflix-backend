@@ -41,6 +41,25 @@ class UserController {
         return res.json({success: false})
     }
 
+    async show(req, res) {
+        const token = req.headers.authorization.replace('Bearer ', '')
+        const _id = decodeJwt(token)
+
+        if(_id) {
+
+            const user = await User.findById(_id)
+            .populate({
+                path: 'ratings',
+                model: 'Rating',
+                select: ['movieId']
+            })
+            
+            return res.json({success: true, user})
+        }
+
+        return res.json({success: false})
+    }
+
 }
 
 module.exports = new UserController()
