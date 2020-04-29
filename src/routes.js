@@ -12,6 +12,7 @@ const UserController = require('./controllers/UserController')
 const MovieController = require('./controllers/MovieController')
 const SessionController = require('./controllers/SessionController')
 const RatingController = require('./controllers/RatingController')
+const LikeController = require('./controllers/LikeController')
 const LikeRatingController = require('./controllers/LikeRatingController')
 
 routes.post('/user', UserController.store)
@@ -27,5 +28,6 @@ routes.get('/movie/:id', jwtAuth , MovieController.show)
 routes.get('/rating', jwtAuth, RatingController.index)
 routes.post('/rating', jwtAuth, RatingController.store)
 routes.post('/rating/:idRating/like', jwtAuth, LikeRatingController.store)
+routes.get('/favorites', jwtAuth, LikeController.store)
 
 module.exports = routes

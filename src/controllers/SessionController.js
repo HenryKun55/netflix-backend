@@ -33,6 +33,7 @@ module.exports = {
                 return res.status(401).json({success: false, message: err.message})
             }
             const user = await User.findById(decoded._id)
+            if(!user) return res.status(404).json({success: false}) 
             return res.json({user})
         })
     }

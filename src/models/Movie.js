@@ -15,7 +15,7 @@ const Movie = new mongoose.Schema(
         ratings: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                red: "Rating"
+                ref: "Rating"
             }
         ],
     }, {
