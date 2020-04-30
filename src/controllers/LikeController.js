@@ -14,15 +14,16 @@ class LikeRatingController {
           {
             $lookup: {
               from: 'users',
-              pipeline: [
-                { $match: { _id: user._id } },
-              ],
+              localField:"users",
+              foreignField:"_id",
               as: 'favorites'
-            }
+            },
           },
           {
-            $limit: 5
-          }
+            $match:{
+                "favorites._id": user._id
+            }
+          },
         ])
 
         return res.json(favorites)
