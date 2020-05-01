@@ -10,24 +10,9 @@ class LikeRatingController {
         const token = req.headers.authorization.replace('Bearer ', '')
         const decoded = decodeJwt(token);
         const user = await User.findById(decoded)
-        const favorites = await Movie.aggregate([
-          {
-            $lookup: {
-              from: 'users',
-              localField:"users",
-              foreignField:"_id",
-              as: 'favorites'
-            },
-          },
-          {
-            $match:{
-                "favorites._id": user._id
-            }
-          },
-        ])
+        const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)})
 
         return res.json(favorites)
-
     }
 
 }
