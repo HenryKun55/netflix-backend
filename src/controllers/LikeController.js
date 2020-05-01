@@ -10,7 +10,7 @@ class LikeRatingController {
         const token = req.headers.authorization.replace('Bearer ', '')
         const decoded = decodeJwt(token);
         const user = await User.findById(decoded)
-        const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)})
+        const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)}).select('movieId')
 
         return res.json(favorites)
     }
