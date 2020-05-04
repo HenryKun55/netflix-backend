@@ -28,6 +28,6 @@ routes.get('/movie/:id', jwtAuth , MovieController.show)
 routes.get('/rating', jwtAuth, RatingController.index)
 routes.post('/rating', jwtAuth, RatingController.store)
 routes.post('/rating/:idRating/like', jwtAuth, LikeRatingController.store)
-routes.get('/favorites', jwtAuth, LikeController.store)
+routes.post('/favorites', jwtAuth, LikeController.store)
 
 module.exports = routes

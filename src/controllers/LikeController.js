@@ -8,9 +8,11 @@ class LikeRatingController {
     
     async store(req, res) {
         const token = req.headers.authorization.replace('Bearer ', '')
+        const { page = 1 } = req.body
         const decoded = decodeJwt(token);
         const user = await User.findById(decoded)
-        const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)}).select('movieId')
+        const perPage = 10
+        const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)}).select('movieId').limit(perPage).skip((page - 1) * perPage)
 
         return res.json(favorites)
     }
