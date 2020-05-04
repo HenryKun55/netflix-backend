@@ -13,6 +13,10 @@ class LikeRatingController {
         const user = await User.findById(decoded)
         const perPage = 10
         const favorites = await Movie.find({"users": mongoose.Types.ObjectId(user._id)}).select('movieId').limit(perPage).skip((page - 1) * perPage)
+        const count = await Movie.find({"users": mongoose.Types.ObjectId(user._id)}).countDocuments()
+        console.log(count)
+
+        res.header('X-Total-Count', count);
 
         return res.json(favorites)
     }
